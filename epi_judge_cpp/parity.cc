@@ -4,7 +4,7 @@ short Parity(unsigned long long x) {
   bool parity = false;
   while (x) {
     parity ^= (x & 1);
-    parity >>= 1;
+    x >>= 1;
   }
   return parity;
 }
