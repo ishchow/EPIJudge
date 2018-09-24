@@ -1,31 +1,28 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from math import floor, log10
-
-def digit_to_ch(digit):
-    table = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9'}
-    return table.get(digit, None)
+import string
 
 def int_to_string(x):
-    result = []
-    currPow10 = 10 ** (floor(log10(x)) - 1)
-    while x:
-        digit = x // currPow10
-        result.append(digit_to_ch(digit))
-        x %= currPow10
-        currPow10 //= 10
-    return "".join(result)
+    if x == 0:
+        return "0"
 
-def string_to_int(str):
+    x, isNegative = abs(x), x < 0
+    result = []
+    while x:
+        digit = ord('0') + (x % 10)
+        result.append(chr(digit))
+        x //= 10
+    if isNegative:
+        result.append('-')
+    return ''.join(reversed(result))
+
+def string_to_int(s):
     result = 0
-    currPow10 = 1
-    for i in range(reversed(len(str))):
-        ch = str[i]
-        if ord(ch) < ord('0') or ord(ch) > ord('9'):
-            # TODO: Handle error
-            pass
-        digit = ord(ch) - ord('0')
-        result += (digit * currPow10)
+    for i in range(s[0] == '-', len(s)):
+        result = (result * 10) + (ord(s[i]) - ord('0'))
+    if s[0] == '-':
+        result = -result
     return result
 
 def wrapper(x, s):
