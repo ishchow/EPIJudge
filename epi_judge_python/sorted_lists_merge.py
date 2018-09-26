@@ -5,6 +5,11 @@ def emplaceAfter(x, y):
     x.next = y
 
 def merge_two_sorted_lists(L1, L2):
+    if not L2:
+        return L1
+    elif not L1:
+        return L2
+
     if L1.data <= L2.data:
         low, high = L1, L2
     else:
