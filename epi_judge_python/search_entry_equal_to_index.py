@@ -4,36 +4,19 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
-
-def search_index_from_left(A):
-    low, high = 0, len(A) - 1
-    while low <= high:
-        mid = low + ((high - low) // 2)
-        if A[mid] > mid:
-            high = mid - 1
-        elif A[mid] < mid:
-            low = mid + 1
-        else:
-            return mid
-    return -1
-
-def search_index_from_right(A):
-    low, high = 0, len(A) - 1
-    while low <= high:
-        mid = low + ((high - low) // 2)
-        if A[mid] > mid:
-            low = mid + 1
-        elif A[mid] < mid:
-            high = mid - 1
-        else:
-            return mid
-    return -1
-
 def search_entry_equal_to_its_index(A):
     if not A:
         return -1
-    ret_idx = max(search_index_from_left(A), search_index_from_right(A))
-    return ret_idx
+    low, high = 0, len(A) - 1
+    while low <= high:
+        mid = low + ((high - low) // 2)
+        if A[mid] > mid:
+            high = mid - 1
+        elif A[mid] < mid:
+            low = mid + 1
+        else:
+            return mid
+    return -1
 
 
 @enable_executor_hook
