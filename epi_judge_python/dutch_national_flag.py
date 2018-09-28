@@ -6,11 +6,45 @@ from test_framework.test_utils import enable_executor_hook
 
 RED, WHITE, BLUE = range(3)
 
+def swap(A, i, j):
+    A[i], A[j] = A[j], A[i]
 
 def dutch_flag_partition(pivot_index, A):
-    # TODO - you fill in here.
-    return
+    if not A or len(A) <= 1:
+        return
+    # Quicksort such that A: [< pivot | >= pivot]
+    pivot = A[pivot_index]
+    low = sortLeft(A, pivot)
+    # Quicksort such that A[low:]: [== pivot | > pivot]
+    sortRight(A, pivot, low)
 
+def sortLeft(A, pivot):
+    low, high = 0, len(A) - 1
+    while low < high:
+        if A[low] < pivot:
+            low += 1
+        if A[high] >= pivot:
+            high -= 1
+        if (A[low] >= pivot) and (A[high] < pivot):
+            swap(A, low, high)
+            low += 1
+            high -= 1
+    if A[high] > pivot:
+        return high
+    else:
+        return low
+
+def sortRight(A, pivot, low):
+    high = len(A) - 1
+    while low < high:
+        if A[low] == pivot:
+            low += 1
+        if A[high] > pivot:
+            high -= 1
+        if (A[low] > pivot) and (A[high] == pivot):
+            swap(A, low, high)
+            low += 1
+            high -= 1
 
 @enable_executor_hook
 def dutch_flag_partition_wrapper(executor, A, pivot_idx):
