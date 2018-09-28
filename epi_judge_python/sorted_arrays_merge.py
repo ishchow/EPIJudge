@@ -6,10 +6,7 @@ def merge_sorted_arrays(sorted_arrays):
     if not sorted_arrays:
         return []
     toVisit = [0 if arr else -1 for arr in sorted_arrays]
-    heap = []
-    for arrIdx, arr in enumerate(sorted_arrays):
-        if arr:
-            heap.append((arr[0], arrIdx))
+    heap = [(arr[0], arrIdx) for (arrIdx, arr) in enumerate(sorted_arrays) if arr]
     heapq.heapify(heap)
     mergedList = []
     while heap:
