@@ -3,12 +3,23 @@ import heapq
 
 
 def merge_sorted_arrays(sorted_arrays):
+    if not sorted_arrays:
+        return []
+    toVisit = [0 if arr else -1 for arr in sorted_arrays]
+    heap = []
+    for arrIdx, arr in enumerate(sorted_arrays):
+        if arr:
+            heap.append((arr[0], arrIdx))
+    heapq.heapify(heap)
     mergedList = []
-    heapq.heapify(mergedList)
-    for sL in sorted_arrays:
-        for elem in sL:
-            heapq.heappush(mergedList, elem)
-    mergedList = [heapq.heappop(mergedList) for _ in range(len(mergedList))]
+    while heap:
+        (val, listIdx) = heapq.heappop(heap)
+        mergedList.append(val)
+        toVisit[listIdx] += 1
+        elemIdx = toVisit[listIdx]
+        if elemIdx < len(sorted_arrays[listIdx]):
+            val = sorted_arrays[listIdx][elemIdx]
+            heapq.heappush(heap, (val,listIdx))
     return mergedList
 
 
