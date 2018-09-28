@@ -14,37 +14,24 @@ def dutch_flag_partition(pivot_index, A):
         return
     # Quicksort such that A: [< pivot | >= pivot]
     pivot = A[pivot_index]
-    low = sortLeft(A, pivot)
+    sortLeft(A, pivot)
     # Quicksort such that A[low:]: [== pivot | > pivot]
-    sortRight(A, pivot, low)
+    sortRight(A, pivot)
 
 def sortLeft(A, pivot):
-    low, high = 0, len(A) - 1
-    while low < high:
-        if A[low] < pivot:
-            low += 1
-        if A[high] >= pivot:
-            high -= 1
-        if (A[low] >= pivot) and (A[high] < pivot):
-            swap(A, low, high)
-            low += 1
-            high -= 1
-    if A[high] > pivot:
-        return high
-    else:
-        return low
+    smaller = 0
+    for i in range(len(A)):
+        if A[i] < pivot:
+            swap(A, smaller, i)
+            smaller += 1
 
-def sortRight(A, pivot, low):
-    high = len(A) - 1
-    while low < high:
-        if A[low] == pivot:
-            low += 1
-        if A[high] > pivot:
-            high -= 1
-        if (A[low] > pivot) and (A[high] == pivot):
-            swap(A, low, high)
-            low += 1
-            high -= 1
+
+def sortRight(A, pivot):
+    larger = len(A) - 1
+    for j in reversed(range(len(A))):
+        if A[j] > pivot:
+            swap(A, j, larger)
+            larger -= 1
 
 @enable_executor_hook
 def dutch_flag_partition_wrapper(executor, A, pivot_idx):
