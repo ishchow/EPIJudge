@@ -1,9 +1,14 @@
 from test_framework import generic_test
-
+from collections import defaultdict
 
 def can_form_palindrome(s):
-    # TODO - you fill in here.
-    return True
+    if len(s) <= 1:
+        return True
+    chToModFreq = defaultdict(int)
+    for ch in s:
+        chToModFreq[ch] = (chToModFreq[ch] + 1) % 2
+    modSum = sum(chToModFreq.values())
+    return modSum == (len(s) % 2)
 
 
 if __name__ == '__main__':
