@@ -8,21 +8,24 @@ def intersect_two_sorted_arrays(A, B):
         return A[0] if A == B else []
     intrsxn = []
     if A[0] < B[0]:
-        low, high = iter(A), iter(B)
+        lowIt, highIt = iter(A), iter(B)
     else:
-        low, high = iter(B), iter(A)
-    low = next(low, None)
-    high = next(high, None)
-    while low and high:
+        lowIt, highIt = iter(B), iter(A)
+    # Start low and high at beginning of respective arrays, or none if empty
+    low = next(lowIt, None)
+    high = next(highIt, None)
+    i = 0
+    while None not in [low, high]:
         if low < high:
-            low = next(low, None)
+            low = next(lowIt, None)
         elif low == high:
             if (not intrsxn) or (intrsxn[-1] != low):
                 intrsxn.append(low)
-            low = next(low, None)
-            high = next(high, None)
+            low = next(lowIt, None)
+            high = next(highIt, None)
         else:
-            high = next(high, None)
+            high = next(highIt, None)
+        i += 1
     return intrsxn
 
 
