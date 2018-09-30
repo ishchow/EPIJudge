@@ -17,7 +17,7 @@ def is_binary_tree_bst(tree, low_range=float('-inf'), high_range=float('inf')):
             return
         prev = root.data
         helper(root.right)
-    # helper(tree)
+    helper(tree)
     return prev < float('inf')
 
 if __name__ == '__main__':
