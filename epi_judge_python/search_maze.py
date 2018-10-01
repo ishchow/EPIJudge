@@ -13,7 +13,6 @@ Coordinate = collections.namedtuple('Coordinate', ('x', 'y'))
 def search_maze(maze, start, end):
     def isOutOfBounds(point):
         nonlocal maze
-
         return (point.x < 0) \
                 or (point.x >= len(maze)) \
                 or (point.y < 0) \
@@ -21,8 +20,11 @@ def search_maze(maze, start, end):
 
     def getColour(point):
         nonlocal maze
-
         return maze[point.x][point.y]
+
+    def setColour(point, newColour):
+        nonlocal maze
+        maze[point.x][point.y] = newColour
 
     def getNeighbours(point):
         return [Coordinate(point.x, point.y - 1),
@@ -31,13 +33,13 @@ def search_maze(maze, start, end):
                 Coordinate(point.x + 1, point.y)]
 
     def search_maze_helper(curr):
-        nonlocal path, maze, visited, end
+        nonlocal path, maze, end
 
-        if isOutOfBounds(curr) or (curr in visited) or (getColour(curr) == BLACK):
+        if isOutOfBounds(curr) or (getColour(curr) == BLACK):
             return False
 
         path.append(curr)
-        visited[curr] = True
+        setColour(curr, BLACK)
         if curr == end:
             return True
 
