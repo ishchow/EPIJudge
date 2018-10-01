@@ -1,9 +1,14 @@
 from test_framework import generic_test
-
+from collections import defaultdict
 
 def majority_search(stream):
-    # TODO - you fill in here.
-    return ''
+    maxElem = ''
+    elemToFreq = defaultdict(int)
+    for elem in stream:
+        elemToFreq[elem] += 1
+        if elemToFreq[elem] > elemToFreq[maxElem]:
+            maxElem = elem
+    return maxElem
 
 
 def majority_search_wrapper(stream):
