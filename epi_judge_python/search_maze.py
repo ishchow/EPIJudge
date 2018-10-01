@@ -10,10 +10,49 @@ WHITE, BLACK = range(2)
 
 Coordinate = collections.namedtuple('Coordinate', ('x', 'y'))
 
+def search_maze(maze, start, end):
+    def isOutOfBounds(point):
+        nonlocal maze
 
-def search_maze(maze, s, e):
-    # TODO - you fill in here.
-    return []
+        return (point.x < 0) \
+                or (point.x >= len(maze)) \
+                or (point.y < 0) \
+                or (point.y >= len(maze[0])) \
+
+    def getColour(point):
+        nonlocal maze
+
+        return maze[point.x][point.y]
+
+    def getNeighbours(point):
+        return [Coordinate(point.x, point.y - 1),
+                Coordinate(point.x, point.y + 1),
+                Coordinate(point.x - 1, point.y),
+                Coordinate(point.x + 1, point.y)]
+
+    def search_maze_helper(curr):
+        nonlocal path, maze, visited, end
+
+        if isOutOfBounds(curr) or (curr in visited) or (getColour(curr) == BLACK):
+            return False
+
+        path.append(curr)
+        visited[curr] = True
+        if curr == end:
+            return True
+
+        for neighbour in getNeighbours(curr):
+            if search_maze_helper(neighbour):
+                return True
+
+        # No path exists, so remove curr from path
+        path.pop()
+        return False
+
+    start, end = Coordinate(*start), Coordinate(*end)
+    path, visited = [], {}
+    search_maze_helper(start)
+    return path
 
 
 def path_element_is_feasible(maze, prev, cur):
