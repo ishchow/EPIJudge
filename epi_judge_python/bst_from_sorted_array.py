@@ -10,13 +10,12 @@ from bst_node import BstNode
 
 
 def build_min_height_bst_from_sorted_array(A):
-    def getRoot(low, high):
-        nonlocal A
+    def getRoot(A, low, high):
         if low > high:
             return None
         mid = low + ((high - low) // 2)
-        return BstNode(A[mid], getRoot(low, mid - 1), getRoot(mid + 1, high))
-    return getRoot(0, len(A) - 1)
+        return BstNode(A[mid], getRoot(A, low, mid - 1), getRoot(A, mid + 1, high))
+    return getRoot(A, 0, len(A) - 1)
 
 
 @enable_executor_hook
