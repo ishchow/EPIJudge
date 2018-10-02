@@ -6,10 +6,23 @@ from test_framework.binary_tree_utils import (binary_tree_height,
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
+from bst_node import BstNode
+
 
 def build_min_height_bst_from_sorted_array(A):
-    # TODO - you fill in here.
-    return None
+    def insert(curr, low, high):
+        nonlocal root, A
+        if low > high:
+            return
+        mid = low + ((high - low) // 2)
+        curr = BstNode(A[mid])
+        if not root:
+            root = curr
+        insert(curr.left, low, mid - 1)
+        insert(curr.right, mid + 1, high)
+    root = None
+    insert(root, 0, len(A) - 1)
+    return root
 
 
 @enable_executor_hook
