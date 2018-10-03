@@ -1,4 +1,5 @@
 import functools
+import random
 
 from test_framework import generic_test
 from test_framework.random_sequence_checker import (
@@ -8,9 +9,11 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def random_sampling(k, A):
-    # TODO - you fill in here.
-    return
-
+    s = len(A)
+    while k < s:
+        i = random.randint(0, s-1)
+        A[s-1], A[i] = A[i], A[s-1]
+        s -= 1
 
 @enable_executor_hook
 def random_sampling_wrapper(executor, k, A):
