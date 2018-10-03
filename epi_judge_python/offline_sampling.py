@@ -9,11 +9,11 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def random_sampling(k, A):
-    s = len(A)
-    while k < s:
-        i = random.randint(0, s-1)
-        A[s-1], A[i] = A[i], A[s-1]
-        s -= 1
+
+    for i in range(k):
+        # Generate a random index in [i, len(A) - 1].
+        r = random.randint(i, len(A) - 1)
+        A[i], A[r] = A[r], A[i]
 
 @enable_executor_hook
 def random_sampling_wrapper(executor, k, A):
