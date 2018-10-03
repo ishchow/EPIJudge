@@ -3,22 +3,16 @@ from list_node import ListNode
 
 # Assumes L has at least k nodes, deletes the k-th last node in L.
 def remove_kth_last(L, k):
-    slow, fast, jumpCnt = L, L, 0
+    dummy = ListNode(None, L)
+    fast = dummy.next
     for _ in range(k):
-        if not fast.next:
-            break
-        fast, jumpCnt = fast.next, jumpCnt + 1
-    if jumpCnt < k:
-        delNode, L = L, L.next
-        delNode.next = None
-        return L
-    while fast.next:
-        fast, slow = fast.next, slow.next
-    delNode = slow.next
-    slow.next = delNode.next
-    delNode.next = None
-    return L
+        fast = fast.next
 
+    slow = dummy
+    while fast:
+        fast, slow = fast.next, slow.next
+    slow.next = slow.next.next
+    return dummy.next
 
 if __name__ == '__main__':
     exit(
