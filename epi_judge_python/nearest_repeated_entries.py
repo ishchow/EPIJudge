@@ -5,8 +5,8 @@ def find_nearest_repetition(paragraph):
     if not paragraph or len(paragraph) <= 1:
         return -1
     minDist = float('inf')
-    wordToLastIndex = {paragraph[0]: 0}
-    for i in range(1, len(paragraph)):
+    wordToLastIndex = {}
+    for i in range(0, len(paragraph)):
         word = paragraph[i]
         if word not in wordToLastIndex:
             wordToLastIndex[word] = i
