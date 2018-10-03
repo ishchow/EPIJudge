@@ -4,14 +4,14 @@ from test_framework import generic_test
 def power(x, y):
     if y == 0:
         return 1
-    pwr, result = 1, x
-    while (pwr << 1) < abs(y):
-        result *= result
-        pwr <<= 1
-    if pwr < abs(y):
-        result *= x
-    if y < 0:
-        result = 1 / result
+    pwr, result = y, 1.0
+    if pwr < 0:
+        pwr, x = -pwr, 1.0 / x
+    while pwr:
+        if pwr & 1:
+            result *= x
+        x *= x
+        pwr >>= 1
     return result
 
 
