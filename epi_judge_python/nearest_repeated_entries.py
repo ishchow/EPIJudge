@@ -2,8 +2,19 @@ from test_framework import generic_test
 
 
 def find_nearest_repetition(paragraph):
-    # TODO - you fill in here.
-    return 0
+    if not paragraph or len(paragraph) <= 1:
+        return -1
+    minDist = float('inf')
+    wordToLastIndex = {paragraph[0]: 0}
+    for i in range(1, len(paragraph)):
+        word = paragraph[i]
+        if word not in wordToLastIndex:
+            wordToLastIndex[word] = i
+        else:
+            lastIdx = wordToLastIndex[word]
+            minDist = min(minDist, i - lastIdx)
+            wordToLastIndex[word] = i
+    return minDist if minDist < float('inf') else -1
 
 
 if __name__ == '__main__':
