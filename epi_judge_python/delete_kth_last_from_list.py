@@ -11,8 +11,11 @@ def remove_kth_last(L, k):
     slow = dummy
     while fast:
         fast, slow = fast.next, slow.next
-    slow.next = slow.next.next
-    return dummy.next
+    delNode = slow.next
+    slow.next = delNode.next
+    delNode.next = None
+    L = dummy.next
+    return L
 
 if __name__ == '__main__':
     exit(
