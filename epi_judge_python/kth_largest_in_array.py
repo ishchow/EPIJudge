@@ -7,16 +7,16 @@ import random
 # find_kth_largest(3, A) returns 1, and find_kth_largest(4, A) returns -1.
 def find_kth_largest(k, A):
     def partition(A, low, high, pivotIdx):
-        pivotVal = A[pivotIdx]
-        newPivotIdx = low
-        # Move pivot to the right
+        pivotVal, newPivotIdx = A[pivotIdx], low
+        # Swap pivot value with rightmost element of subarray
         A[pivotIdx], A[high] = A[high], A[pivotIdx]
-        # Partition A such that A = [> pivot | <= pivot]
+        # Since pivot is at high, we only consider the subarray A[low:high] (aka, low <= i < high)
+        # Partition A[low:high] such that A[low:high] = [> pivot | <= pivot]
         for i in range(low, high):
             if A[i] > pivotVal:
                 A[i], A[newPivotIdx] = A[newPivotIdx], A[i]
-                newPivotIdx += 1
-        # Switch new pivot with old pivot
+                newPivotIdx += 1 # Increase "wall"
+        # Place pivot at newPivotIdx since A[i] > pivotVal, i < newPivotIdx
         A[high], A[newPivotIdx] = A[newPivotIdx], A[high]
         return newPivotIdx
 
