@@ -15,11 +15,7 @@ def nonuniform_random_number_generation(values, probabilities):
         pmf.append(p+pmf[-1])
     randval = random.random()
     low = bisect.bisect_right(pmf, randval)
-    curr_prob = pmf[low+1] - pmf[low]
-    for i,p in enumerate(probabilities):
-        if p == curr_prob:
-            return values[i]
-    return 0
+    return values[low-1]
 
 
 @enable_executor_hook
