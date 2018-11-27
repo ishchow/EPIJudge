@@ -1,6 +1,8 @@
 import collections
 import functools
 import math
+import random
+import bisect
 
 from test_framework import generic_test
 from test_framework.random_sequence_checker import run_func_with_retries
@@ -8,7 +10,15 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def nonuniform_random_number_generation(values, probabilities):
-    # TODO - you fill in here.
+    pmf = [0]
+    for p in probabilities:
+        pmf.append(p+pmf[-1])
+    randval = random.random()
+    low = bisect.bisect_right(pmf, randval)
+    curr_prob = pmf[low+1] - pmf[low]
+    for i,p in enumerate(probabilities):
+        if p == curr_prob:
+            return values[i]
     return 0
 
 
